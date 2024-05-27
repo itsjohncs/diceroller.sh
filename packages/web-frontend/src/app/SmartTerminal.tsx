@@ -2,6 +2,7 @@
 
 import {useCallback, useState} from "react";
 import Terminal from "./Terminal";
+import roll from "./roll";
 
 export default function SmartTerminal() {
     const [lines, setLines] = useState<string[]>([]);
@@ -9,7 +10,7 @@ export default function SmartTerminal() {
     const handleSubmit = useCallback(
         function (value: string) {
             setLines(function (prev) {
-                return [...prev, value];
+                return [...prev, roll(value)];
             });
         },
         [setLines],
