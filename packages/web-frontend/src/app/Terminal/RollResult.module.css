@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eee;
+    border-radius: 2px;
+    gap: 8px;
+    padding: 8px;
+    margin-top: 3px;
+    width: max-content;
+    max-width: 100%;
+}
+
+.total {
+    display: flex;
+    gap: 2px;
+    font-weight: bold;
+}
+
+.divider {
+    font-weight: 300;
+    color: #888;
+}

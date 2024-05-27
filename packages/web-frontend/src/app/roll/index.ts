@@ -1,10 +1,40 @@
 import {DiceRoll} from "@dice-roller/rpg-dice-roller";
 
-export default function roll(input: string): string {
+type Roll = {
+    type: "roll";
+    input: string;
+    result: {
+        rolls: string;
+        total: string;
+    };
+    error?: undefined;
+};
+
+type Error = {
+    type: "error";
+    input: string;
+    result?: undefined;
+    error: string;
+};
+
+export type RollLogEntry = Roll | Error;
+
+export default function roll(input: string): RollLogEntry {
     try {
         const diceRoll = new DiceRoll(input);
-        return `${diceRoll.rolls} = ${diceRoll.total}`;
+        return {
+            type: "roll",
+            input,
+            result: {
+                rolls: diceRoll.rolls + "",
+                total: diceRoll.total + "",
+            },
+        };
     } catch (e) {
-        return e + "";
+        return {
+            type: "error",
+            input,
+            error: e + "",
+        };
     }
 }
