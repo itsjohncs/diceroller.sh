@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #eee;
+    background-color: #eee8d5;
     border-radius: 2px;
     gap: 8px;
     padding: 8px;
@@ -18,6 +18,6 @@
 }
 
 .divider {
+    color: #6c71c4;
     font-weight: 300;
-    color: #888;
 }
