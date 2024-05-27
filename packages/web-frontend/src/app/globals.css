@@ -1,12 +1,12 @@
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 body {
-  color: #002b36;
-  background: #fdf6e4;
-  font-family: monospace;
-  white-space: pre;
+    color: #002b36;
+    background: #fdf6e4;
+    font-family: monospace;
+    white-space: pre;
 }

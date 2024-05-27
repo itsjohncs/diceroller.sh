@@ -3,9 +3,9 @@ import styles from "./page.module.css";
 import SmartTerminal from "./SmartTerminal";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <SmartTerminal />
-    </main>
-  );
+    return (
+        <main className={styles.main}>
+            <SmartTerminal />
+        </main>
+    );
 }
