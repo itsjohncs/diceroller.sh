@@ -1,4 +1,4 @@
-import { DiceRoll } from "@dice-roller/rpg-dice-roller";
+import {DiceRoll} from "@dice-roller/rpg-dice-roller";
 
 export default function roll(input: string): string {
     try {
