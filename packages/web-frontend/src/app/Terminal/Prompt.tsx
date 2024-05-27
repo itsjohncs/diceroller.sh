@@ -3,7 +3,7 @@
 import {KeyboardEvent, useCallback, useRef} from "react";
 
 import styles from "./Prompt.module.css";
-import useDocumentListener from "../../../utils/useDocumentListener";
+import useDocumentListener from "@/utils/useDocumentListener";
 
 interface Props {
     prompt: string;
@@ -23,7 +23,7 @@ export default function Prompt(props: Props) {
     );
 
     const editableAreaRef = useRef<HTMLSpanElement>(null);
-    useDocumentListener("click", function(event) {
+    useDocumentListener("click", function (event) {
         editableAreaRef.current?.focus();
     });
 
