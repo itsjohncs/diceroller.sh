@@ -1,8 +1,9 @@
 "use client";
 
-import {KeyboardEvent, useCallback} from "react";
+import {KeyboardEvent, useCallback, useRef} from "react";
 
 import styles from "./Prompt.module.css";
+import useDocumentListener from "../../../utils/useDocumentListener";
 
 interface Props {
     prompt: string;
@@ -21,13 +22,20 @@ export default function Prompt(props: Props) {
         [onSubmit],
     );
 
+    const editableAreaRef = useRef<HTMLSpanElement>(null);
+    useDocumentListener("click", function(event) {
+        editableAreaRef.current?.focus();
+    });
+
     return (
         <div>
             {props.prompt}
             <span
+                ref={editableAreaRef}
                 className={styles.editableArea}
                 contentEditable={true}
                 onKeyDown={handleKeyDown}
+                autoFocus={true}
             ></span>
         </div>
     );
