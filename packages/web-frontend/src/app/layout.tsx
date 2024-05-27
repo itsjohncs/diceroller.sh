@@ -1,8 +1,11 @@
 import type {Metadata} from "next";
-import {Inter} from "next/font/google";
+import {Source_Code_Pro} from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({subsets: ["latin"]});
+const font = Source_Code_Pro({
+    subsets: ["latin"],
+    display: "swap",
+});
 
 export const metadata: Metadata = {
     title: "dice.sh",
@@ -16,7 +19,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <body className={font.className}>{children}</body>
         </html>
     );
 }
