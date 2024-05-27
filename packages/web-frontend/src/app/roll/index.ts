@@ -26,7 +26,7 @@ export default function roll(input: string): RollLogEntry {
             type: "roll",
             input,
             result: {
-                rolls: diceRoll.rolls + "",
+                rolls: diceRoll.rolls.join(""),
                 total: diceRoll.total + "",
             },
         };
