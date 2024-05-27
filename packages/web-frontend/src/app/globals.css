@@ -4,24 +4,9 @@
   margin: 0;
 }
 
-html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
+  color: #002b36;
   background: #fdf6e4;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+  font-family: monospace;
+  white-space: pre;
 }
