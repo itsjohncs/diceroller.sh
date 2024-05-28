@@ -17,7 +17,13 @@ type Error = {
     error: string;
 };
 
-export type RollLogEntry = Roll | Error;
+type SimpleInfo = {
+    type: "simple-info";
+    input: string;
+    subType: "help";
+};
+
+export type RollLogEntry = Roll | Error | SimpleInfo;
 
 export default function roll(input: string): RollLogEntry {
     if (input.trim() === "") {
@@ -25,6 +31,13 @@ export default function roll(input: string): RollLogEntry {
             type: "error",
             input,
             error: "Error: No input. Try /help.",
+        };
+    }
+    if (input.trim() === "/help") {
+        return {
+            type: "simple-info",
+            input,
+            subType: "help",
         };
     }
 

@@ -97,11 +97,12 @@ function EditableArea_(
 ): ReactElement {
     const {value, onChange} = props;
 
-    const handleInput = useCallback(function (
-        event: ChangeEvent<HTMLSpanElement>,
-    ) {
-        onChange(event.currentTarget.textContent ?? "");
-    }, [onChange]);
+    const handleInput = useCallback(
+        function (event: ChangeEvent<HTMLSpanElement>) {
+            onChange(event.currentTarget.textContent ?? "");
+        },
+        [onChange],
+    );
 
     const innerRef = useRef<HTMLSpanElement>(null);
     useLayoutEffect(function () {

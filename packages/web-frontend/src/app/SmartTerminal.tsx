@@ -4,6 +4,7 @@ import {ReactElement, useCallback, useState} from "react";
 import Terminal from "./Terminal";
 import roll, {RollLogEntry} from "./roll";
 import RollResult from "./Terminal/RollResult";
+import Help from "./Help";
 
 const prompt = "$ ";
 
@@ -51,6 +52,8 @@ export default function SmartTerminal() {
             );
         } else if (line.type === "error") {
             lineNodes.push(<div key={idx}>{line.error}</div>);
+        } else if (line.type === "simple-info" && line.subType === "help") {
+            lineNodes.push(<Help key={idx} />);
         }
     }
 
