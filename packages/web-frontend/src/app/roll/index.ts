@@ -20,6 +20,14 @@ type Error = {
 export type RollLogEntry = Roll | Error;
 
 export default function roll(input: string): RollLogEntry {
+    if (input.trim() === "") {
+        return {
+            type: "error",
+            input,
+            error: "Error: No input. Try /help.",
+        };
+    }
+
     try {
         const diceRoll = new DiceRoll(input);
         return {
