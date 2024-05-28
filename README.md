@@ -8,6 +8,7 @@ I've created a quick MVP to see if I (or others) actually like the basic idea. D
 
 * `Ctrl+R` to do a fuzzy history search.
 * Save all prompts to local storage so they're searchable.
+    * *Some details:* Currently the history is just what's on the screen and it's stored in session storage. But I want there to be an additional log of just the user's inputs in local storage that can be searched through.
 * Add a server backend to allow saving history there and hosting shared sessions.
 * Create alternate interfaces:
     * An actual command line version you can run locally, similar to my [die-sim](https://github.com/itsjohncs/die-sim).
