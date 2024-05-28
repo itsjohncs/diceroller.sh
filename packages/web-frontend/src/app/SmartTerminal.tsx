@@ -10,6 +10,18 @@ const prompt = "$ ";
 export default function SmartTerminal() {
     const [lines, setLines] = useState<RollLogEntry[]>([]);
 
+    const getHistoricalInput = useCallback(
+        function (offset: number): string | undefined {
+            const nonEmptyLines = lines.filter((i) => i.input.trim() !== "");
+            if (offset < nonEmptyLines.length) {
+                return nonEmptyLines[nonEmptyLines.length - offset - 1].input;
+            }
+
+            return undefined;
+        },
+        [lines],
+    );
+
     const handleSubmit = useCallback(
         function (value: string) {
             setLines(function (prev) {
@@ -43,7 +55,11 @@ export default function SmartTerminal() {
     }
 
     return (
-        <Terminal prompt={prompt} onSubmit={handleSubmit}>
+        <Terminal
+            prompt={prompt}
+            onSubmit={handleSubmit}
+            getHistoricalInput={getHistoricalInput}
+        >
             {lineNodes}
         </Terminal>
     );
