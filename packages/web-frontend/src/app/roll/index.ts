@@ -19,7 +19,7 @@ type Error = {
 
 type SimpleInfo = {
     type: "simple-info";
-    input: string;
+    input?: string;
     subType: "help";
 };
 

@@ -10,11 +10,15 @@ import {useSessionStorage} from "usehooks-ts";
 const prompt = "$ ";
 
 export default function SmartTerminal() {
-    const [lines, setLines] = useSessionStorage<RollLogEntry[]>("roll-log", []);
+    const [lines, setLines] = useSessionStorage<RollLogEntry[]>("roll-log", [
+        {type: "simple-info", subType: "help"},
+    ]);
 
     const getHistoricalInput = useCallback(
         function (offset: number): string | undefined {
-            const nonEmptyLines = lines.filter((i) => i.input.trim() !== "");
+            const nonEmptyLines = lines.filter(
+                (i) => i.input && i.input.trim() !== "",
+            );
             if (offset < nonEmptyLines.length) {
                 return nonEmptyLines[nonEmptyLines.length - offset - 1].input;
             }
@@ -41,12 +45,14 @@ export default function SmartTerminal() {
     const lineNodes: ReactElement[] = [];
     for (let idx = 0; idx < lines.length; ++idx) {
         const line = lines[idx];
-        lineNodes.push(
-            <div key={`${idx}-input`}>
-                {prompt}
-                {line.input}
-            </div>,
-        );
+        if (line.input !== undefined) {
+            lineNodes.push(
+                <div key={`${idx}-input`}>
+                    {prompt}
+                    {line.input}
+                </div>,
+            );
+        }
 
         if (line.type === "roll") {
             lineNodes.push(
