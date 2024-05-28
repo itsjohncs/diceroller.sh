@@ -18,6 +18,8 @@ export default function Prompt(props: Props) {
                 onSubmit(event.currentTarget.textContent ?? "");
                 event.currentTarget.textContent = "";
             }
+
+            window.scrollTo(0, document.body.scrollHeight);
         },
         [onSubmit],
     );
