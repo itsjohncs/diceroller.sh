@@ -33,12 +33,21 @@ export default function roll(input: string): RollLogEntry {
             error: "Error: No input. Try /help.",
         };
     }
-    if (input.trim() === "/help") {
-        return {
-            type: "simple-info",
-            input,
-            subType: "help",
-        };
+
+    if (input.trim().startsWith("/")) {
+        if (input.trim() === "/help") {
+            return {
+                type: "simple-info",
+                input,
+                subType: "help",
+            };
+        } else {
+            return {
+                type: "error",
+                input,
+                error: "Error: Unknown command. Try /help.",
+            };
+        }
     }
 
     try {
