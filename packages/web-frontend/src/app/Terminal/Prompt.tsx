@@ -36,6 +36,7 @@ export default function Prompt(props: Props) {
                 contentEditable={true}
                 onKeyDown={handleKeyDown}
                 autoFocus={true}
+                spellCheck={false}
             ></span>
         </div>
     );
