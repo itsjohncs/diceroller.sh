@@ -1,16 +1,9 @@
 "use client";
 
-import {
-    ChangeEvent,
-    FormEvent,
-    KeyboardEvent,
-    useCallback,
-    useRef,
-    useState,
-} from "react";
+import {KeyboardEvent, useCallback, useRef, useState} from "react";
 
-import styles from "./Prompt.module.css";
 import useDocumentListener from "@/utils/useDocumentListener";
+import EditableArea from "./EditableArea";
 
 const NewInput = Symbol("newInput");
 
@@ -44,7 +37,7 @@ function addOffset(
 }
 
 export default function Prompt(props: Props) {
-    const history = useRef<HistoryState>({
+    const [history, setHistory] = useState<HistoryState>({
         offset: 0,
         [NewInput]: "",
     });
@@ -53,26 +46,30 @@ export default function Prompt(props: Props) {
     const handleKeyDown = function (event: KeyboardEvent<HTMLSpanElement>) {
         if (event.key === "Enter") {
             onSubmit(event.currentTarget.textContent ?? "");
-            history.current = {
+            setHistory({
                 offset: NewInput,
                 [NewInput]: "",
-            };
-            event.currentTarget.textContent = "";
+            });
             event.preventDefault();
         } else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
             const newHistoryOffset = addOffset(
-                history.current.offset,
+                history.offset,
                 event.key === "ArrowUp" ? 1 : -1,
             );
-            if (newHistoryOffset !== history.current.offset) {
-                let foundValue = history.current[newHistoryOffset];
+            if (newHistoryOffset !== history.offset) {
+                let foundValue = history[newHistoryOffset];
                 if (foundValue === undefined) {
                     foundValue = getHistoricalInput(newHistoryOffset as number);
                 }
 
                 if (foundValue !== undefined) {
-                    event.currentTarget.textContent = foundValue;
-                    history.current.offset = newHistoryOffset;
+                    setHistory(function (prev) {
+                        return {
+                            ...prev,
+                            offset: newHistoryOffset,
+                            [newHistoryOffset]: foundValue,
+                        };
+                    });
                     event.preventDefault();
                 }
             }
@@ -81,12 +78,17 @@ export default function Prompt(props: Props) {
         window.scrollTo(0, document.body.scrollHeight);
     };
 
-    const handleInput = useCallback(function (
-        event: FormEvent<HTMLSpanElement>,
-    ) {
-        history.current[history.current.offset] =
-            event.currentTarget.textContent ?? "";
-    }, []);
+    const handleChange = useCallback(
+        function (value: string) {
+            setHistory(function (prev) {
+                return {
+                    ...prev,
+                    [prev.offset]: value,
+                };
+            });
+        },
+        [setHistory],
+    );
 
     const editableAreaRef = useRef<HTMLSpanElement>(null);
     useDocumentListener("click", function (event) {
@@ -96,15 +98,12 @@ export default function Prompt(props: Props) {
     return (
         <div>
             {props.prompt}
-            <span
+            <EditableArea
                 ref={editableAreaRef}
-                className={styles.editableArea}
-                contentEditable={true}
-                onInput={handleInput}
+                value={history[history.offset] ?? ""}
+                onChange={handleChange}
                 onKeyDown={handleKeyDown}
-                autoFocus={true}
-                spellCheck={false}
-            ></span>
+            />
         </div>
     );
 }
