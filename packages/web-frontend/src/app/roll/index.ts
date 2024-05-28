@@ -23,9 +23,13 @@ type SimpleInfo = {
     subType: "help";
 };
 
+type ClearScreenCommand = {
+    type: "clear";
+};
+
 export type RollLogEntry = Roll | Error | SimpleInfo;
 
-export default function roll(input: string): RollLogEntry {
+export default function roll(input: string): RollLogEntry | ClearScreenCommand {
     if (input.trim() === "") {
         return {
             type: "error",
@@ -34,12 +38,17 @@ export default function roll(input: string): RollLogEntry {
         };
     }
 
-    if (input.trim().startsWith("/")) {
-        if (input.trim() === "/help") {
+    const trimmed = input.trim();
+    if (trimmed.startsWith("/")) {
+        if (trimmed === "/help") {
             return {
                 type: "simple-info",
                 input,
                 subType: "help",
+            };
+        } else if (trimmed === "/clear") {
+            return {
+                type: "clear",
             };
         } else {
             return {

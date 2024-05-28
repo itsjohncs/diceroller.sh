@@ -14,6 +14,7 @@ export default function Help() {
             <br />
             You can also use these special commands:
             <br />- /help: Show this message.
+            <br />- /clear: Clear history.
         </div>
     );
 }

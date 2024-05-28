@@ -26,7 +26,12 @@ export default function SmartTerminal() {
     const handleSubmit = useCallback(
         function (value: string) {
             setLines(function (prev) {
-                return [...prev, roll(value)];
+                const entry = roll(value);
+                if (entry.type === "clear") {
+                    return [];
+                } else {
+                    return [...prev, entry];
+                }
             });
         },
         [setLines],
