@@ -10,3 +10,11 @@ body {
     font-family: "Source Code Pro", monospace;
     white-space: pre-wrap;
 }
+
+a {
+    color: #268bd2;
+}
+
+a:visited {
+    color: #6c71c4;
+}
