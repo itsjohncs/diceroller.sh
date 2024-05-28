@@ -1,13 +1,9 @@
 export default function Help() {
     return (
         <div>
-            dice.sh is an{" "}
-            <a href="https://github.com/itsjohncs/dice.sh">open source</a> dice
-            roller made by{" "}
-            <a href="https://twitter.com/itsjohncs">@itsjohncs</a> (
-            <a href="https://tech.lgbt/@johncs">mastodon</a>). I also created{" "}
-            <a href="https://shmeppy.com">Shmeppy</a> if you want another fun
-            and simple tool.
+            dice.sh is a console-like online dice roller (<a href="https://github.com/itsjohncs/dice.sh">GitHub</a>).
+            If you like it and want more{" "}
+            <a href="https://twitter.com/itsjohncs">tweet</a> or <a href="https://tech.lgbt/@johncs">toot</a> at me.
             <br />
             <br />
             Enter dice notation to roll dice. For example:
