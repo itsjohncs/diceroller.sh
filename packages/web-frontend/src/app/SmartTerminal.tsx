@@ -5,11 +5,12 @@ import Terminal from "./Terminal";
 import roll, {RollLogEntry} from "./roll";
 import RollResult from "./Terminal/RollResult";
 import Help from "./Help";
+import {useSessionStorage} from "usehooks-ts";
 
 const prompt = "$ ";
 
 export default function SmartTerminal() {
-    const [lines, setLines] = useState<RollLogEntry[]>([]);
+    const [lines, setLines] = useSessionStorage<RollLogEntry[]>("roll-log", []);
 
     const getHistoricalInput = useCallback(
         function (offset: number): string | undefined {
