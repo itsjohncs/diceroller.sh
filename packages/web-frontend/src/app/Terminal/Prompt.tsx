@@ -74,8 +74,6 @@ export default function Prompt(props: Props) {
                 }
             }
         }
-
-        window.scrollTo(0, document.body.scrollHeight);
     };
 
     const handleChange = useCallback(
