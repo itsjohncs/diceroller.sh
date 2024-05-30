@@ -2,7 +2,7 @@ export default function Help() {
     return (
         <div>
             diceroller.sh is a console-like online dice roller (
-            <a href="https://github.com/itsjohncs/dice.sh">GitHub</a>). If you
+            <a href="https://github.com/itsjohncs/diceroller.sh">GitHub</a>). If you
             like it and want more{" "}
             <a href="https://twitter.com/itsjohncs">tweet</a> or{" "}
             <a href="https://tech.lgbt/@johncs">toot</a> at me.
