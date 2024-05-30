@@ -4,7 +4,7 @@ A simple online console-like dice roller available at [https://diceroller.sh](ht
 
 ## Roadmap
 
-I've created a quick MVP to see if I (or others) actually like the basic idea. Depending on the results of the MVP, here are some of the other features I was planning to build:
+I've created a quick MVP to see if I end up liking using this. Here's some other things I thought could be useful:
 
 * `Ctrl+R` to do a fuzzy history search.
 * Save all prompts to local storage so they're searchable.
