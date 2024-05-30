@@ -26,69 +26,12 @@ function getSoleTextNode(parent: Node): Text | undefined {
     return undefined;
 }
 
-interface SavedSelection {
-    ranges: [start: number, end: number][];
-}
-
-function saveSelection(expectedTarget: Node): SavedSelection | undefined {
-    const selection = window.getSelection();
-    if (!selection) {
-        return undefined;
-    }
-
-    const ranges: SavedSelection["ranges"] = [];
-    for (let i = 0; i < selection.rangeCount; ++i) {
-        const range = selection.getRangeAt(i);
-        if (
-            range.startContainer === expectedTarget &&
-            range.endContainer === expectedTarget
-        ) {
-            ranges.push([range.startOffset, range.endOffset]);
-        }
-    }
-
-    if (ranges.length > 0) {
-        return {ranges};
-    } else {
-        return undefined;
-    }
-}
-
 function createCollapsedRangeAtEndOfText(target: Text): Range {
     const range = document.createRange();
     const length = (target.textContent ?? "").length;
     range.setStart(target, length);
     range.setEnd(target, length);
     return range;
-}
-
-function loadSelection(target: Text, savedSelection: SavedSelection): void {
-    const selection = window.getSelection();
-    if (!selection) {
-        return;
-    }
-
-    let addedOneRange = false;
-    selection.removeAllRanges();
-    for (const range of savedSelection.ranges) {
-        try {
-            const newRange = document.createRange();
-            newRange.setStart(target, range[0]);
-            newRange.setEnd(target, range[1]);
-            selection.addRange(newRange);
-            addedOneRange = true;
-        } catch (e) {
-            //
-        }
-    }
-
-    if (!addedOneRange) {
-        try {
-            selection.addRange(createCollapsedRangeAtEndOfText(target));
-        } catch (e) {
-            console.log("Failed to place cursor at end of prompt", e);
-        }
-    }
 }
 
 function EditableArea_(
@@ -106,14 +49,23 @@ function EditableArea_(
 
     const innerRef = useRef<HTMLSpanElement>(null);
     useLayoutEffect(function () {
-        const textNode = innerRef.current && getSoleTextNode(innerRef.current);
-        const savedSelection = textNode && saveSelection(textNode);
         if (innerRef.current && innerRef.current.textContent !== value) {
             innerRef.current.textContent = value;
 
+            const selection = window.getSelection();
+            if (!selection) {
+                return;
+            }
             const textNode = getSoleTextNode(innerRef.current);
-            if (textNode && savedSelection) {
-                loadSelection(textNode, savedSelection);
+            if (textNode) {
+                try {
+                    selection.removeAllRanges();
+                    selection.addRange(
+                        createCollapsedRangeAtEndOfText(textNode),
+                    );
+                } catch (e) {
+                    console.log("Failed to place cursor at end of prompt", e);
+                }
             }
         }
     });
