@@ -5,27 +5,28 @@ import Terminal from "./Terminal";
 import roll, {RollLogEntry} from "./roll";
 import RollResult from "./Terminal/RollResult";
 import Help from "./Help";
-import {useSessionStorage} from "usehooks-ts";
+import {useLocalStorage, useSessionStorage} from "usehooks-ts";
 
 const prompt = "$ ";
 
 export default function SmartTerminal() {
+    const [history, setHistory] = useLocalStorage<string[]>(
+        "prompt-history",
+        [],
+    );
     const [lines, setLines] = useSessionStorage<RollLogEntry[]>("roll-log", [
         {type: "simple-info", subType: "help"},
     ]);
 
     const getHistoricalInput = useCallback(
         function (offset: number): string | undefined {
-            const nonEmptyLines = lines.filter(
-                (i) => i.input && i.input.trim() !== "",
-            );
-            if (offset < nonEmptyLines.length) {
-                return nonEmptyLines[nonEmptyLines.length - offset - 1].input;
+            if (offset < history.length) {
+                return history[history.length - offset - 1];
             }
 
             return undefined;
         },
-        [lines],
+        [history],
     );
 
     const handleSubmit = useCallback(
@@ -38,8 +39,15 @@ export default function SmartTerminal() {
                     return [...prev, entry];
                 }
             });
+            setHistory(function (prev) {
+                if (value.trim() !== "" && value !== prev[prev.length - 1]) {
+                    return [...prev, value];
+                }
+
+                return prev;
+            });
         },
-        [setLines],
+        [setLines, setHistory],
     );
 
     const lineNodes: ReactElement[] = [];
