@@ -1,3 +1,4 @@
+import {Analytics} from "@vercel/analytics/react";
 import type {Metadata} from "next";
 import {Source_Code_Pro} from "next/font/google";
 import "./globals.css";
@@ -19,7 +20,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={font.className}>{children}</body>
+            <body className={font.className}>
+                <Analytics />
+                {children}
+            </body>
         </html>
     );
 }
